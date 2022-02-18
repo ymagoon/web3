@@ -31,4 +31,4 @@ gAAAAABiD8ygOfF4UDsV5tam4_HKj7fR9r49_ooNMa1NpHsAtk5spk_FJoiIh1hGn3wklXyDwUCMj1gE
 
 7. Open the hydrate.py file and replace the wallet # on line 5
 
-## 8. In your terminal, run the hydrate.py file and 
+8. In your terminal, run the hydrate.py file and 
