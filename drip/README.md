@@ -17,7 +17,7 @@ is to do this automatically for you so you don't have to.
 ## Setup Autohydrater
 
 This code was specifically written to be as secure as possible, since signing transactions requires the use of
-a wallet's private key. It's imparative you follow use the encryption outlined in the code to best protect yourself
+a wallet's private key. It's imparative you use the encryption outlined in the code to best protect yourself
 in the event your computer is ever compomised. 
 
 1. Download [Python](https://www.python.org/downloads/) if you do not already have it. I was not able to get this code
@@ -36,7 +36,7 @@ $ python -m pip install python-dotenv
 
 3. In a python terminal, import `cryptography` and encrypt your private key
 
-```bash
+```py
 >>>import cryptography
 >>>key = Fernet.generate_key()
 >>>fernet = Fernet(key.encode())
