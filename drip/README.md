@@ -8,8 +8,8 @@ importantly, compound interest.
 
 ## The Faucet
 
-The [Faucet][drip.community/faucet] is a low-risk, high reward contract that operates similar to a high yield 
-certificate of deposit. You can participate by purchasing drip from the [swap page][drip.community/fountain].
+The [Faucet](drip.community/faucet) is a low-risk, high reward contract that operates similar to a high yield 
+certificate of deposit. You can participate by purchasing drip from the [swap page](drip.community/fountain).
 
 It is necessary, depending on your deposit size, to compound up to several times a day. The purpose of this code
 is to do this automatically for you so you don't have to. 
@@ -20,7 +20,7 @@ This code was specifically written to be as secure as possible, since signing tr
 a wallet's private key. It's imparative you follow use the encryption outlined in the code to best protect yourself
 in the event your computer is ever compomised. 
 
-1. Download [Python][https://www.python.org/downloads/] if you do not already have it. I was not able to get this code
+1. Download [Python](https://www.python.org/downloads/) if you do not already have it. I was not able to get this code
 to work on Python 3.9, so I would recommending using Python 3.7 or 3.8. There are a number of resources that will walk 
 you through installing Python depending on your operating system.
 
@@ -61,8 +61,8 @@ $ python hydrate.py
 This terminal window will always need to remain open for the autohydrater to function.If the terminal window closes, just execute
 `hydrate.py` again.
 
-If this autohydrater helps you, consider supporting me and sending me an airdrop. 
+If this autohydrater helps you, consider supporting me by sending me an airdrop. 
 
 *0xeDb0951cF765b6E19881497C407C39914D78c597*
 
-If you haven't already joined the [animalfarm][https://theanimalfarm/referrals/0xeDb0951cF765b6E19881497C407C39914D78c597], then you should definitely have a look!
+If you haven't already joined the [animalfarm](https://theanimalfarm/referrals/0xeDb0951cF765b6E19881497C407C39914D78c597), then you should definitely have a look!
