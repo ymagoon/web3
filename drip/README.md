@@ -46,7 +46,7 @@ $ python -m pip install python-dotenv
 
 4. Take the value in `encMessage`, create a file called `key.txt` and save the text in the file 
 
-5. Open the .env.example file and replace the key with the key you generated in step 3. Save the file without .example at the end. 
+5. Open `.env.example` and replace the key with the key you generated in step 3. Save the file without .example at the end. 
 
 6. Open the `hydrate.py` file and replace the string stored in `wallet_public_addr` with your own public wallet.
 
@@ -58,11 +58,11 @@ In a terminal window, navigate to the location where you saved all the files. Ru
 $ python hydrate.py
 ```
 
-This terminal window will always need to remain open for the autohydrater to function.If the terminal window closes, just execute
+This terminal window will always need to remain open for the autohydrater to function. If the terminal window closes, just execute
 `hydrate.py` again.
 
 If this autohydrater helps you, consider supporting me by sending me an airdrop. 
 
-*0xeDb0951cF765b6E19881497C407C39914D78c597*
+**wallet:** *0xeDb0951cF765b6E19881497C407C39914D78c597*
 
-If you haven't already joined the [animalfarm](https://theanimalfarm/referrals/0xeDb0951cF765b6E19881497C407C39914D78c597), then you should definitely have a look!
+If you haven't already invested in the [Animal Farm](https://theanimalfarm/referrals/0xeDb0951cF765b6E19881497C407C39914D78c597), then I highly recommend you doing so!
