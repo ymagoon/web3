@@ -1,6 +1,6 @@
 # Drip Intro
 
-[Drip][drip.community/faucet] is a deflationary daily ROI platform that allows
+[Drip](https://drip.community) is a deflationary daily ROI platform that allows
 you to earn 1% daily return on your investment sustainably through a tax system
 on transactions. It also allows team building through a referral system, and most
 importantly, compound interest. 
@@ -8,8 +8,8 @@ importantly, compound interest.
 
 ## The Faucet
 
-The [Faucet](drip.community/faucet) is a low-risk, high reward contract that operates similar to a high yield 
-certificate of deposit. You can participate by purchasing drip from the [swap page](drip.community/fountain).
+The [Faucet](https://drip.community/faucet) is a low-risk, high reward contract that operates similar to a high yield 
+certificate of deposit. You can participate by purchasing drip from the [swap page](https://drip.community/fountain).
 
 It is necessary, depending on your deposit size, to compound up to several times a day. The purpose of this code
 is to do this automatically for you so you don't have to. 
