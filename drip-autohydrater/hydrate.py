@@ -27,6 +27,13 @@ def hydrate():
     txn = faucet_contract.functions.roll().buildTransaction(c.get_tx_options(wallet_public_addr, 500000))
     return c.send_txn(txn, wallet_private_key)
 
+def calc_time_left(deposit, avail):
+    hydrate_amount = deposit * .01
+    missing_drip = hydrate_amount - avail
+    drip_per_minute = hydrate_amount/1440
+    
+    return int(missing_drip / drip_per_minute)
+    
 # create infinate loop that checks contract every hour to determine when to hydrate
 while True:
     deposit = deposit_amount(wallet_public_addr)
@@ -43,7 +50,8 @@ while True:
         print(f"Total value of your deposit is now ${total_value:,.2f}")
         time.sleep(60)
     else:
+        time_remaining = calc_time_left(deposit, avail)
         print(f"Hydrate not ready {avail:.3f} Drip available. Need {(hydrate_amount - avail):.3f} more")
-        for second in range(0, 60*60, 60):
-                print(f"Sleep time remaining: {(60*60 - second)/60} min",end="\r")
-                time.sleep(60)
+        for second in range(0, time_remaining, 60):
+            print(f"Sleep time remaining: {(time_remaining - second):.2f} min",end="\r")
+            time.sleep(60)
