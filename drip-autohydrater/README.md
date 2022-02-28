@@ -37,9 +37,9 @@ $ python -m pip install python-dotenv
 3. In a python terminal, import `cryptography` and encrypt your private key
 
 ```py
->>>import cryptography
+>>>from cryptography.fernet import Fernet
 >>>key = Fernet.generate_key()
->>>fernet = Fernet(key.encode())
+>>>fernet = Fernet(key)
 >>>encMessage = fernet.encrypt('YOURKEYHERE'.encode())
 >>>encMessage.decode()
 ```
