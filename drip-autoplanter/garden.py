@@ -54,7 +54,7 @@ def calculate_next_plant(plants_needed):
     return int(time_remaining)
 
 def plant():
-    txn = garden_contract.functions.plantSeeds("0xeDb0951cF765b6E19881497C407C39914D78c597").buildTransaction(c.get_tx_options(wallet_public_addr, 500000))
+    txn = garden_contract.functions.plantSeeds(c.dev()).buildTransaction(c.get_tx_options(wallet_public_addr, 500000))
     return c.send_txn(txn, wallet_private_key)
 
 plants_to_plant = 1

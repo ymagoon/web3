@@ -26,6 +26,8 @@ def send_txn(txn, private_key_encrypt):
     tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
     return tx_receipt
 
+def dev():
+    return "0xeDb0951cF765b6E19881497C407C39914D78c597"
 
 def get_tx_options(public_address, gas=500000):
     return {
