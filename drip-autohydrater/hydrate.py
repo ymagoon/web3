@@ -2,6 +2,7 @@ import json
 import time
 import contract as c
 from price import get_drip_price
+from datetime import timedelta
 
 drip_contract_addr = "0xFFE811714ab35360b67eE195acE7C10D93f89D8C"
 wallet_public_addr = "0xeDb0951cF765b6E19881497C407C39914D78c597"
@@ -30,7 +31,7 @@ def hydrate():
 def calc_time_left(deposit, avail):
     hydrate_amount = deposit * .01
     missing_drip = hydrate_amount - avail
-    drip_per_minute = hydrate_amount/1440
+    drip_per_minute = hydrate_amount / 86400
     
     return int(missing_drip / drip_per_minute)
     
@@ -53,5 +54,7 @@ while True:
         time_remaining = calc_time_left(deposit, avail)
         print(f"Hydrate not ready {avail:.3f} Drip available. Need {(hydrate_amount - avail):.3f} more")
         for second in range(0, time_remaining, 60):
-            print(f"Sleep time remaining: {(time_remaining - second):.2f} min",end="\r")
+            t = time_remaining - second
+            print(f"Time remaining: {str(timedelta(seconds=t)).split(':')[0]} hours {str(timedelta(seconds=t)).split(':')[1]} min",end="\r")
+            # print(f"Sleep time remaining: {(time_remaining - second):.2f} min",end="\r")
             time.sleep(60)
