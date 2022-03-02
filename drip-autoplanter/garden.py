@@ -70,7 +70,7 @@ while True:
     
     # this prevents loss of seeds to under 8000 per planting
     seed_range = True if seed_ratio > .997 else False
-
+    
     if new_plants >= plants_to_plant and seed_range:
         plant()
         
@@ -83,7 +83,7 @@ while True:
         if plants_to_plant >= new_plants:
             plants_needed = plants_to_plant - new_plants
         else:
-            plants_needed = new_plants + 1
+            plants_needed = 1
             
         seeds_needed = (plants_needed * 2592000) - seed_remainder
   
