@@ -80,7 +80,7 @@ while True:
         time.sleep(5) # prevent nonce error from being thrown
     else:
         # if referral adds more plants than we are compounding
-        if plants_to_plant >= new_plants:
+        if plants_to_plant > new_plants:
             plants_needed = plants_to_plant - new_plants
         else:
             plants_needed = 1
