@@ -38,11 +38,26 @@ def calc_time_left(deposit, avail):
 # create infinate loop that checks contract every hour to determine when to hydrate
 while True:
     deposit = deposit_amount(wallet_public_addr)
-    hydrate_amount = deposit * .01
+    
+    # control frequency of hydrations depending on deposit size
+    if deposit < 5:
+        hydrate_amount = deposit * .12
+    elif deposit < 10:
+        hydrate_amount = deposit * .05
+    elif deposit < 25:
+        hydrate_amount = deposit * .025
+    elif deposit < 100:
+        hydrate_amount = deposit * .015
+    elif deposit < 5000:
+        hydrate_amount = deposit * .01
+    else:
+        hydrate_amount = deposit * .005
+        
     avail = available(wallet_public_addr)
     
     if avail >= hydrate_amount:
         hydrate()
+        time.sleep(1)
         new_deposit = deposit_amount(wallet_public_addr)
         drip_price = get_drip_price()
         total_value = new_deposit * drip_price

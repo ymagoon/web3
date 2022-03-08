@@ -24,7 +24,7 @@ in the event your computer is ever compomised.
 to work on Python 3.9, so I would recommending using Python 3.7 or 3.8. There are a number of resources that will walk 
 you through installing Python depending on your operating system.
 
-2. Once Python is installed, the following packages need to be installed.
+2. Once Python is installed, the following packages need to be installed. Open a terminal and run Python. Then, run the commands shown below. 
 
 web3, cryptography, python-dotenv
  
@@ -39,16 +39,25 @@ $ python -m pip install python-dotenv
 ```py
 >>>from cryptography.fernet import Fernet
 >>>key = Fernet.generate_key()
+>>>key.decode()
+```
+
+4. Open `.env.example` and replace the key with the key you generated in step 3. Save the file without .example at the end. This key 
+SHOULD contain the quotes before and after the key.
+
+5. Encrypt your private key. 
+
 >>>fernet = Fernet(key)
 >>>encMessage = fernet.encrypt('YOURKEYHERE'.encode())
 >>>encMessage.decode()
 ```
 
-4. Take the value in `encMessage`, create a file called `key.txt` and save the text in the file 
+If you are using MetaMask, your private key can be found under account details -> Export Private Key. If you are using TrustWallet, you need to take your seed
+phrase and import your wallet into MetaMask. Then you can export the private key. Using your seed phrase for TrustWallet will not work. 
 
-5. Open `.env.example` and replace the key with the key you generated in step 3. Save the file without .example at the end. 
+6. Take the value in `encMessage.decode()`, create a file called `key.txt` and save the text in the file. This file SHOULD NOT contain quotes. 
 
-6. Open the `hydrate.py` file and replace the string stored in `wallet_public_addr` with your own public wallet.
+7. Open the `hydrate.py` file and replace the string stored in `wallet_public_addr` with your own public wallet.
 
 ## Using the Autohydrater
 

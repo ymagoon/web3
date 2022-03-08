@@ -92,11 +92,11 @@ while True:
         # calculate time remaining in seconds
         time_remaining = calculate_next_plant(plants_needed)
         
-        for second in range(0, time_remaining, 1):
+        for second in range(0, time_remaining, .5):
             t = time_remaining - second
             # poll every 30 seconds to see if referrals have been paid
             if t % 30 == 0:
                 break
 
             print(f"Next Plant Ready: {str(timedelta(seconds=t)).split(':')[0]} hours {str(timedelta(seconds=t)).split(':')[1]} min {str(timedelta(seconds=t)).split(':')[2]} seconds",end="\r")
-            time.sleep(1)
+            time.sleep(.5)
