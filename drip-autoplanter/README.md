@@ -40,6 +40,7 @@ SHOULD contain the quotes before and after the key.
 
 5. Encrypt your private key. 
 
+```py
 >>>fernet = Fernet(key)
 >>>encMessage = fernet.encrypt('YOURKEYHERE'.encode())
 >>>encMessage.decode()
