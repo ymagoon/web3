@@ -1,22 +1,12 @@
+import argparse
+import configparser
 import json
+import math
+import contract as c
 import time
 from datetime import datetime
 from datetime import timedelta
-import math
-import contract as c
 
-garden_contract_addr = "0x685BFDd3C2937744c13d7De0821c83191E3027FF"
-wallet_public_addr = "0xeDb0951cF765b6E19881497C407C39914D78c597"
-
-# load private key
-wallet_private_key = open('key.txt', "r").readline()
-
-# load abi
-f = open('garden_abi.json')
-garden_abi = json.load(f)
-
-# create contract
-garden_contract = c.connect_to_contract(garden_contract_addr, garden_abi)
 
 def calculate_seed_to_lp(seeds):
     return garden_contract.functions.calculateSeedSell(seeds).call()/1000000000000000000
@@ -42,8 +32,8 @@ def get_seed_to_lp_ratio(addr):
     return total_lp *.95 # tax of 5% on withdrawls
 
 def calculate_next_plant(plants_needed):
-    seeds = get_user_seeds(wallet_public_addr)
-    total_plants = get_plants_planted(wallet_public_addr)
+    seeds = get_user_seeds(wallet_address)
+    total_plants = get_plants_planted(wallet_address)
     
     # each plant generates 1 seed per second
     seeds_per_second = total_plants
@@ -54,49 +44,72 @@ def calculate_next_plant(plants_needed):
     return int(time_remaining)
 
 def plant():
-    txn = garden_contract.functions.plantSeeds(c.dev()).buildTransaction(c.get_tx_options(wallet_public_addr, 500000))
+    txn = garden_contract.functions.plantSeeds(c.dev(wallet_address)).buildTransaction(c.get_tx_options(wallet_address, 500000))
     return c.send_txn(txn, wallet_private_key)
 
-plants_to_plant = 1
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Drip Autoplanter')
+    parser.add_argument("-p", "--plants-to-compound", help="Number of plants to compound at a time", type=int, dest='plants_to_compound', required=True)
+    parser.add_argument("-w", "--wallet-address", help="Your wallet address", type=str, dest='wallet_address', required=True)
+    args = parser.parse_args()
 
-while True:
-    seeds = get_user_seeds(wallet_public_addr)
-    total_plants = get_plants_planted(wallet_public_addr)
-    new_plants = math.floor(seeds / 2592000)
-    seed_remainder = seeds % 2592000
-    
-    # calculate % of seeds lost 
-    seed_ratio = (1 - (seed_remainder / 2592000))
-    
-    # this prevents loss of seeds to under 8000 per planting
-    seed_range = True if seed_ratio > .997 else False
-    
-    if new_plants >= plants_to_plant and seed_range:
-        plant()
+    plants_to_compound = args.plants_to_compound
+    wallet_address = args.wallet_address
+
+    # load config
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+
+    garden_contract_addr = config['DEFAULT']['garden_contract_address']
+
+    # load private key
+    wallet_private_key = open('key.txt', "r").readline()
+
+    # load abi
+    f = open('garden_abi.json')
+    garden_abi = json.load(f)
+
+    # create contract
+    garden_contract = c.connect_to_contract(garden_contract_addr, garden_abi)
+
+    while True:
+        seeds = get_user_seeds(wallet_address)
+        total_plants = get_plants_planted(wallet_address)
+        new_plants = math.floor(seeds / 2592000)
+        seed_remainder = seeds % 2592000
+
+        # calculate % of seeds lost 
+        seed_ratio = (1 - (seed_remainder / 2592000))
         
-        print(f'Planted! {new_plants} added to your garden. Total number of plants now {total_plants + new_plants}')
-        print(f'Seeds lost: {seed_remainder}')
+        # this prevents loss of seeds to under 8000 per planting
+        seed_range = True if seed_ratio > .997 else False
         
-        time.sleep(5) # prevent nonce error from being thrown
-    else:
-        # if referral adds more plants than we are compounding
-        if plants_to_plant > new_plants:
-            plants_needed = plants_to_plant - new_plants
+        if new_plants >= plants_to_compound and seed_range:
+            plant()
+
+            print(f'Planted! {new_plants} added to your garden. Total number of plants now {total_plants + new_plants}')
+            print(f'Seeds lost: {seed_remainder}')
+
+            time.sleep(5) # prevent nonce error from being thrown
         else:
-            plants_needed = 1
-            
-        seeds_needed = (plants_needed * 2592000) - seed_remainder
-  
-        print(f"Planting not ready {seeds} seeds available. Need {seeds_needed} more")
-        
-        # calculate time remaining in seconds
-        time_remaining = calculate_next_plant(plants_needed)
-        
-        for second in range(0, time_remaining, .5):
-            t = time_remaining - second
-            # poll every 30 seconds to see if referrals have been paid
-            if t % 30 == 0:
-                break
+            # if referral adds more plants than we are compounding
+            if plants_to_compound > new_plants:
+                plants_needed = plants_to_compound - new_plants
+            else:
+                plants_needed = 1
 
-            print(f"Next Plant Ready: {str(timedelta(seconds=t)).split(':')[0]} hours {str(timedelta(seconds=t)).split(':')[1]} min {str(timedelta(seconds=t)).split(':')[2]} seconds",end="\r")
-            time.sleep(.5)
+            seeds_needed = (plants_needed * 2592000) - seed_remainder
+
+            print(f"Planting not ready {seeds} seeds available. Need {seeds_needed} more")
+            
+            # calculate time remaining in seconds
+            time_remaining = calculate_next_plant(plants_needed)
+
+            for second in range(0, time_remaining, 1):
+                t = time_remaining - second
+                # poll every 30 seconds to see if referrals have been paid
+                if t % 30 == 0:
+                    break
+
+                print(f"Next Plant Ready: {str(timedelta(seconds=t)).split(':')[0]} hours {str(timedelta(seconds=t)).split(':')[1]} min {str(timedelta(seconds=t)).split(':')[2]} seconds",end="\r")
+                time.sleep(.5)

@@ -1,12 +1,17 @@
+import configparser
 import os
-from web3 import Web3
 from cryptography.fernet import Fernet
 from dotenv import load_dotenv
+from web3 import Web3
+
+# load config
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 # load environment variables
 load_dotenv()
 
-rpc_url = "https://bsc-dataseed.binance.org:443"
+rpc_url = config['DEFAULT']['rpc_url']
 web3 = Web3(Web3.HTTPProvider(rpc_url))
 
 def connect_to_contract(contract_addr, contract_abi):
@@ -26,8 +31,8 @@ def send_txn(txn, private_key_encrypt):
     tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
     return tx_receipt
 
-def dev():
-    return "0xeDb0951cF765b6E19881497C407C39914D78c597"
+def dev(public_address):
+    return public_address
 
 def get_tx_options(public_address, gas=500000):
     return {

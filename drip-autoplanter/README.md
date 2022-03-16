@@ -17,14 +17,10 @@ in the event your computer is ever compomised.
 to work on Python 3.9, so I would recommending using Python 3.7 or 3.8. There are a number of resources that will walk 
 you through installing Python depending on your operating system.
 
-2. Once Python is installed, the following packages need to be installed. Open a terminal and run Python. Then, run the commands shown below. 
-
-web3, cryptography, python-dotenv
+2. Once Python is installed, install the required python packages. Open a terminal and run Python. Then, run the command shown below. 
  
 ```bash
-$ python -m pip install web3
-$ python -m pip install cryptography
-$ python -m pip install python-dotenv
+$ python -m pip install -r requirements.txt
 ```
 
 3. In a python terminal, import `cryptography` and encrypt your private key
@@ -51,20 +47,30 @@ phrase and import your wallet into MetaMask. Then you can export the private key
 
 6. Take the value in `encMessage.decode()`, create a file called `key.txt` and save the text in the file. This file SHOULD NOT contain quotes. 
 
-7. Open the `garden.py` file and replace the string stored in `wallet_public_addr` with your own public wallet.
-
-8. Change the `plants_to_plant` value to the number of plants you want to compound after reaching
-
 ## Using the Autoplanter
 
-In a terminal window, navigate to the location where you saved all the files. Run the `garden.py` file.
+```bash
+$ python garden.py --help
+usage: garden.py [-h] -p PLANTS_TO_COMPOUND -w WALLET_ADDRESS
+
+Drip Autoplanter
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p PLANTS_TO_COMPOUND, --plants-to-compound PLANTS_TO_COMPOUND
+                        Number of plants to compound at a time
+  -w WALLET_ADDRESS, --wallet-address WALLET_ADDRESS
+                        Your wallet address
+```
+
+In a terminal window, navigate to the location where you saved all the files. Run the `garden.py` file with the required arguments.
 
 ```bash
-$ python garden.py
+$ python garden.py -p 1 -w <your-wallet-address>
 ```
 
 This terminal window will always need to remain open for the autoplanter to function. If the terminal window closes, just execute
-`garden.py` again.
+the command again.
 
 If this autoplanter helps you, consider supporting me by sending me an airdrop. 
 
