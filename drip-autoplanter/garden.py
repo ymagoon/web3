@@ -71,6 +71,12 @@ if __name__ == '__main__':
         type=int,
         dest='plants_to_compound',
     )
+    parser.add_argument(
+        "-f", "--force-compound",
+        help="Ignore seeds lost",
+        action='store_true',
+        dest='force_compound',
+    )
     args = parser.parse_args()
 
     # load config
@@ -88,13 +94,17 @@ if __name__ == '__main__':
     # create contract
     garden_contract = c.connect_to_contract(garden_contract_addr, garden_abi)
 
-    # Set wallet address and plants to compound
+    # Process arguments
     wallet_address = args.wallet_address
+    force_compound = args.force_compound
     if args.plants_to_compound:
         plants_to_compound = args.plants_to_compound
     else:
         plants_to_compound = \
             int((get_plants_planted(wallet_address) * 86400) / 2592000)
+
+    print(f'Program will compound {plants_to_compound} plant when ready.' +
+          f'Force compound is {force_compound}')
 
     while True:
         seeds = get_user_seeds(wallet_address)
@@ -105,10 +115,12 @@ if __name__ == '__main__':
         # calculate % of seeds lost
         seed_ratio = (1 - (seed_remainder / 2592000))
 
-        # this prevents loss of seeds to under 8000 per planting
+        # If loss of seeds is under 8000 this will be true
         seed_range = True if seed_ratio > .997 else False
 
-        if new_plants >= plants_to_compound and seed_range:
+        print(f'Currently you have {new_plants} new plants and {seeds} seeds')
+
+        if new_plants >= plants_to_compound and (seed_range or force_compound):
             plant()
 
             print(f'Planted! {new_plants} added to your garden. Total number of plants now {total_plants + new_plants}')
